@@ -300,17 +300,6 @@ key=value
         assert propunit.source.encode('utf-8') == u'value'
         assert propunit.getnotes() == u"/* Foo\nBar\nBaz */"
 
-    def test_mac_strings_comments_dropping(self):
-        """.string generic (and unuseful) comments should be dropped"""
-        propsource = ur'''/* No comment provided by engineer. */
-"key" = "value";'''.encode('utf-16')
-        propfile = self.propparse(propsource, personality="strings")
-        assert len(propfile.units) == 1
-        propunit = propfile.units[0]
-        assert propunit.name == u'key'
-        assert propunit.source.encode('utf-8') == u'value'
-        assert propunit.getnotes() == u""
-
     def test_mac_strings_quotes(self):
         """test that parser unescapes characters used as wrappers"""
         propsource = ur'"key with \"quotes\"" = "value with \"quotes\"";'.encode('utf-16')

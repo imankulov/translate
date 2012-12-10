@@ -296,7 +296,6 @@ class Dialect(object):
     pair_terminator = u""
     key_wrap_char = u""
     value_wrap_char = u""
-    drop_comments = []
 
     def encode(cls, string, encoding=None):
         """Encode the string"""
@@ -379,7 +378,6 @@ class DialectStrings(Dialect):
     value_wrap_char = u'"'
     out_ending = u';'
     out_delimiter_wrappers = u' '
-    drop_comments = ["/* No comment provided by engineer. */"]
 
     def key_strip(cls, key):
         """Strip unneeded characters from the key"""
@@ -578,8 +576,7 @@ class propfile(base.TranslationStore):
             elif (inmultilinecomment or is_comment_one_line(line) or
                   is_comment_start(line) or is_comment_end(line)):
                 # add a comment
-                if line not in self.personality.drop_comments:
-                    newunit.comments.append(line)
+                newunit.comments.append(line)
                 if is_comment_start(line):
                     inmultilinecomment = True
                 elif is_comment_end(line):
